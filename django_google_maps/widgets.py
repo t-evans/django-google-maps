@@ -12,9 +12,17 @@ class GoogleMapsAddressWidget(widgets.TextInput):
         css = {'all': (settings.STATIC_URL + 'django_google_maps/css/google-maps-admin.css',),}
         js = (
             'https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js',
-            'https://maps.google.com/maps/api/js?sensor=false',
+            GoogleMapsAddressWidget.build_google_maps_api_url(),
             settings.STATIC_URL + 'django_google_maps/js/google-maps-admin.js',
         )
+
+    @staticmethod
+    def build_google_maps_api_url():
+        google_maps_api = 'https://maps.google.com/maps/api/js?sensor=false'
+        google_api_key = getattr(settings,'GOOGLE_API_KEY', None)
+        if google_api_key is not None:
+            google_maps_api = '%s&key=%s' % (google_maps_api, google_api_key)
+        return google_maps_api
 
     def render(self, name, value, attrs=None):
         if value is None:

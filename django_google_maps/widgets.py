@@ -19,6 +19,11 @@ class GoogleMapsAddressWidget(widgets.TextInput):
     @staticmethod
     def build_google_maps_api_url():
         google_maps_api = 'https://maps.google.com/maps/api/js?sensor=false'
+
+        additional_google_maps_libraries = getattr(settings, 'ADDITIONAL_GOOGLE_MAPS_LIBRARIES', False)
+        if additional_google_maps_libraries:
+            google_maps_api = '%s&libraries=%s' % additional_google_maps_libraries
+            
         google_api_key = getattr(settings,'GOOGLE_API_KEY', None)
         if google_api_key is not None:
             google_maps_api = '%s&key=%s' % (google_maps_api, google_api_key)

@@ -41,6 +41,7 @@ function googleMapAdmin() {
                 zoom = 18;
             }
 
+            var autocomplete = new google.maps.places.Autocomplete();
             var latlng = new google.maps.LatLng(lat,lng);
             var myOptions = {
               zoom: zoom,
